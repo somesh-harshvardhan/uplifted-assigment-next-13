@@ -22,6 +22,7 @@ const Quiz = () => {
   const finishQuiz = async () => {
     setStart(QUIZ_STATES.complete);
   };
+
   const fetchQuestions = useCallback(async () => {
     if (start === QUIZ_STATES.start) {
       try {

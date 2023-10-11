@@ -47,7 +47,7 @@ const QuizScreen = ({
 }) => {
   const [currentCounter, setCurrentCounter] = useState(0);
   const [selected, setSelected] = useState(null);
-  const [time, setTime] = useState();
+  const [startTime, setStartTime] = useState(0);
 
   const totalQuestion = questions.length;
   const answered = currentCounter;
@@ -56,8 +56,10 @@ const QuizScreen = ({
   const isCorrect = answer === currentQuestion?.options[selected];
 
   const handleNextClick = () => {
+    const endTime = new Date().getTime();
+    const timeTakenSecs = (endTime - startTime) / 1000;
     setSelected(null);
-    setScore((prev) => (isCorrect ? prev + 5 : prev));
+    setScore((prev) => (isCorrect ? prev + 1 : prev));
     if (currentCounter < totalQuestion) {
       setCurrentCounter(currentCounter + 1);
     } else {
@@ -67,10 +69,12 @@ const QuizScreen = ({
   useEffect(() => {
     if (questions.length) {
       setCurrentCounter(1);
-      console.log(questions);
     }
   }, [questions]);
 
+  useEffect(() => {
+    setStartTime(new Date().getTime());
+  }, [currentCounter]);
   return (
     <div className=" bg-[#AF9CF3] h-full relative z-0 flex flex-col">
       <OverlappingLayer className=" relative w-full -top-7 z-10" />
