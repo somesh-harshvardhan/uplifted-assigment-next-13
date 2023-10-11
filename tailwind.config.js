@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         "red-1": "#FF3B3C",
+        "green-1": "#66bb6a",
       },
     },
   },

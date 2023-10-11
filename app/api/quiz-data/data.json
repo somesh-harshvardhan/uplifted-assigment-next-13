@@ -5,6 +5,7 @@
       "questions": [
         {
           "question": "What is the capital of France?",
+          "question_img" : "https://wallpapers.com/images/featured/cute-aesthetic-cartoon-wm3e9c8csk53jc0g.jpg",
           "options": ["Berlin", "Madrid", "Rome", "Paris"],
           "correctAnswer": "Paris"
         },

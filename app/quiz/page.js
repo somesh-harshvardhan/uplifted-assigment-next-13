@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import StartScreen from "./StartScreen";
 import QuizScreen from "./QuizScreen";
+import ScoreScreen from "./ScoreScreen";
 const QUIZ_STATES = {
   start: "START",
   quiz: "QUIZ",
@@ -11,11 +12,16 @@ const Quiz = () => {
   const [start, setStart] = useState(QUIZ_STATES.start);
   const [questions, setQuestions] = useState([]);
   const [loading, setloading] = useState(false);
+  const [score, setScore] = useState(0);
+
   const startQuiz = async () => {
     await fetchQuestions();
     setStart(QUIZ_STATES.quiz);
   };
 
+  const finishQuiz = async () => {
+    setStart(QUIZ_STATES.complete);
+  };
   const fetchQuestions = useCallback(async () => {
     if (start === QUIZ_STATES.start) {
       try {
@@ -32,16 +38,21 @@ const Quiz = () => {
   }, [start]);
 
   const COMPONENT = {
-    [QUIZ_STATES.start]: (props) => (
-      <StartScreen startQuiz={startQuiz} {...props} />
-    ),
-    [QUIZ_STATES.quiz]: (props) => (
-      <QuizScreen questions={questions} {...props} />
-    ),
+    [QUIZ_STATES.start]: StartScreen,
+    [QUIZ_STATES.quiz]: QuizScreen,
+    [QUIZ_STATES.complete]: ScoreScreen,
   }[start];
   return (
     <div className=" h-full">
-      <COMPONENT loading={loading} />
+      <COMPONENT
+        loading={loading}
+        startQuiz={startQuiz}
+        setScore={setScore}
+        setloading={setloading}
+        questions={questions}
+        score={score}
+        finishQuiz={finishQuiz}
+      />
     </div>
   );
 };
