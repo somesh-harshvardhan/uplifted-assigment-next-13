@@ -16,6 +16,7 @@ const Quiz = () => {
 
   const startQuiz = async () => {
     await fetchQuestions();
+    setScore(0);
     setStart(QUIZ_STATES.quiz);
   };
 
@@ -29,7 +30,7 @@ const Quiz = () => {
         setloading(true);
         const res = await fetch("/api/quiz-data", { method: "GET" });
         const data = await res.json();
-        setQuestions([...data.quiz.questions]);
+        setQuestions([...data.quiz.questions].slice(0, 5));
       } catch (error) {
         console.log(error);
       } finally {
