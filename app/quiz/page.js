@@ -30,7 +30,7 @@ const Quiz = () => {
         setloading(true);
         const res = await fetch("/api/quiz-data", { method: "GET" });
         const data = await res.json();
-        setQuestions([...data.quiz.questions].slice(0, 5));
+        setQuestions([...data.quiz.questions]);
       } catch (error) {
         console.log(error);
       } finally {
