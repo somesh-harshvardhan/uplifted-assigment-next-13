@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import OverlappingLayer from "../components/assets/OverlappingLayer";
 import Button from "../components/shared/button/Button";
 const SpeedoMeter = ({ total, score }) => {
-  const rotate = (score / total) * 180 + 270;
+  const [rotate, setRotate] = useState(270);
   const result = (score / total) * 100;
+  useEffect(() => {
+    setTimeout(() => {
+      const rotate = (score / total) * 180 + 270;
+      setRotate(rotate);
+    }, 200);
+  }, []);
   return (
     <div className=" h-[230px] overflow-hidden">
       <div className=" h-[200px] w-full flex items-center justify-center relative ">
