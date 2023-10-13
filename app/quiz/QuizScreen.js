@@ -55,15 +55,30 @@ const QuizScreen = ({
   const answer = currentQuestion?.correctAnswer;
   const isCorrect = answer === currentQuestion?.options[selected];
 
-  const handleNextClick = () => {
+  const handleNextClick = async () => {
     const endTime = new Date().getTime();
     const timeTakenSecs = (endTime - startTime) / 1000;
-    setSelected(null);
-    setScore((prev) => (isCorrect ? prev + 1 : prev));
-    if (currentCounter < totalQuestion) {
-      setCurrentCounter(currentCounter + 1);
-    } else {
-      finishQuiz();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/quiz-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedOption: selected, timeTakenSecs }),
+      });
+      // logged return value
+      console.log(await res.json());
+      setSelected(null);
+      setScore((prev) => (isCorrect ? prev + 1 : prev));
+      if (currentCounter < totalQuestion) {
+        setCurrentCounter(currentCounter + 1);
+      } else {
+        finishQuiz();
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -119,12 +134,13 @@ const QuizScreen = ({
         </div>
       </div>
       {/* next button */}
-      <div className=" fixed bottom-[50px] w-[calc(100%-40px)] left-1/2 -translate-x-1/2 max-w-md">
+      <div className=" fixed bottom-[30px] w-[calc(100%-40px)] left-1/2 -translate-x-1/2 max-w-md">
         <Button
-          label={"Next"}
+          label={loading ? "Submitiing" : "Next"}
           icon={BsArrowRight}
           onClick={handleNextClick}
           disabled={!Number.isInteger(selected)}
+          loading={loading}
         />
       </div>
     </div>

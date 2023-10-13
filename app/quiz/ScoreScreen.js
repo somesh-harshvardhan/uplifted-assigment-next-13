@@ -61,6 +61,7 @@ const ScoreScreen = ({ score, questions, startQuiz }) => {
 
       <div className=" bg-white w-full flex-1 rounded-tr-[52px] rounded-tl-[52px] relative p-5">
         <h3 className=" mt-5 font-bold text-2xl text-center">Your Result</h3>
+        {/* Speedometer */}
         <SpeedoMeter total={questions.length} score={score} />
         <div className=" mt-9">
           <div>

@@ -50,7 +50,7 @@ const Quiz = () => {
         loading={loading}
         startQuiz={startQuiz}
         setScore={setScore}
-        setloading={setloading}
+        setLoading={setloading}
         questions={questions}
         score={score}
         finishQuiz={finishQuiz}
